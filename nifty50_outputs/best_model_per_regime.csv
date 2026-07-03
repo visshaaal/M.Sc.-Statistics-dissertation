@@ -1,0 +1,4 @@
+"Regime","Best_Model","Best_AIC"
+"Regime 1 - Pre-COVID","EGARCH(1,1)",6526.1541
+"Regime 2 - COVID crisis","EGARCH(1,1)",1720.6428
+"Regime 3 - Post-crisis","EGARCH(1,1)",1441.2742

@@ -1,0 +1,2 @@
+"Test","Lags","Chi_sq","p_value","Conclusion"
+"ARCH LM Test",10,916.8705,0,"ARCH effects present → GARCH modelling justified"

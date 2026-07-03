@@ -1,0 +1,2 @@
+"Model","VaR_1pct","VaR_5pct","ES_1pct","ES_5pct","Breach_1pct","Breach_5pct","Expected_1pct","Expected_5pct","Kupiec_1pct","Kupiec_5pct"
+"EGARCH(1,1)",-2.371157,-1.495664,-3.465235,-2.144926,46,208,37,184,"PASS - VaR model adequate","PASS - VaR model adequate"

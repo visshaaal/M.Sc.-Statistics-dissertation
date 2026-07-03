@@ -1,0 +1,5 @@
+"Confidence","N_obs","N_breach","Expected","Breach_Rate","Target_Rate","LR_stat","p_value","Result","Window"
+"99%",3678,46,37,1.2507,1,2.1626,0.141407,"PASS - VaR model adequate","In-Sample"
+"99%",736,10,7,1.3587,1,0.8601,0.353716,"PASS - VaR model adequate","OOS"
+"95%",3678,208,184,5.6552,5,3.1953,0.073849,"PASS - VaR model adequate","In-Sample"
+"95%",736,39,37,5.2989,5,0.1359,0.712385,"PASS - VaR model adequate","OOS"

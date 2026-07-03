@@ -1,0 +1,5 @@
+"Lag","LB_stat","p_value","Result"
+5,9.2379,0,"FAIL (serial correlation remains)"
+10,12.6683,0.026693,"FAIL (serial correlation remains)"
+15,18.5874,0.045828,"FAIL (serial correlation remains)"
+20,24.9126,0.05113,"PASS (no serial correlation)"

@@ -1,0 +1,432 @@
+\chapter{Methodology}
+
+\section{ Introduction}
+
+The empirical framework adopted to analyse the Nifty 50 Index - the Indian benchmark equity index – volatility behaviour in terms of time series between January 2010 and December 2024 is explained in this chapter. A traditional approach of ordinary least squares (OLS) would not apply to financial return series owing to the volatility clustering of financial returns, fat-tailed distributions of returns, asymmetric and idiosyncratic response to market shocks, and idiosyncratic variance persistence. In such a context, the present research decants from a selection of the GARCH family models, which have been shown to fit these characteristics. The framework is complemented by the analyses of structural break detection, regime specific parameter estimation and multi-horizon volatility forecasting, as well as extensive backtesting.
+Data and sample construction are introduced in Section 3.2 followed by preliminary diagnostic tests in Section 3.3; and the test evaluation is covered in Section 3.4.Section 3.5 addresses structural break testing; Section 3.6 details the regime-based estimation; Section 3.7 discusses multi-horizon forecasting and model evaluation; Section 3.8 covers Value-at-Risk and Expected Shortfall estimation and backtesting; and Section 3.9 summarises the estimation environment.
+
+
+
+
+
+\section{Data Description and Sample Construction}
+\subsection{Data Source and Variable Definition}
+The daily closing prices of the Nifty 50 Index (ticker: ˆNSEI) are obtained from Yahoo Finance using the quantmod package in R. The sample period extends from January 1, 2010 to December 31, 2024.
+After excluding non-trading days and missing values by listwise deletion, there are approximately 3,700 trading-day observations.
+
+
+\newpage 
+The main thing we are looking at is the log return and it is calculated as follows:
+
+
+
+\begin{equation}
+   r_t = \ln \left( \frac{P_t}{P_{t-1}} \right)\times100
+\end{equation}
+
+
+
+where $P_t$ is the closing index level on trading day $t$. We multiply this by $100$ so we can see the returns as a percentage. This makes it easier to compare the models. Out of sample, forecasting period  at the year $2025$ divided into four quarters ( January 1 $2025$ to December 31 $2025$).
+
+\vspace{1.5cm}
+
+\subsection{Rationale for the Sample Period}
+
+Time period from $2010$ to $2024$ is chosen because it covers different economic and political situations. This includes the time after the Global Financial Crisis covering volatility persistence when India was recovering from ( $2010$ to $2013$), from ( $2014$ to $2019$) the big shock of the COVID-19 pandemic from( $2020$ to $2021$) the recovery from that and the time when interest rates were going up in ( $2022$) and the times of geopolitical tension with the Russia–-Ukraine and Israel-–Hamas conflicts (from $2022$ to $2024$). This variety is important to see if our models are strong and if the parameters are stable.
+
+\vspace{1.5cm}
+
+\section{Preliminary Diagnostic Tests}
+
+\subsection{Descriptive Statistics and Normality Testing}
+
+Eight summary 
+statistics: mean, median, standard deviation, minimum, 
+maximum, skewness, excess kurtosis, and the 
+Jarque--Bera test statistic are used to characterised the distributional properties of the Nifty 50 daily 
+log returns. 
+
+Normality of the return series is estimated 
+using the Jarque--Bera test \citep{jarque1980}, 
+evaluates departures from normality by 
+examining the third and fourth central moments of the empirical 
+distribution. The test statistic is defined as:
+
+\begin{equation}
+JB = \frac{n}{6} \left[ S^2 + \frac{(K - 3)^2}{4} \right]
+\end{equation}
+
+where $n$ is the number of observations in the sample, $S$ is the skewness of the sample and $K$ is the kurtosis of the sample. Under null hypothises of normality, this statistic follows a $\chi^2$ distribution with 2 degree of freedom. Rejection of the null hypothesis at the 5\% significance level confirms that the return series exhibits non-normality characterised by fat tails and excess kurtosis,  adoption of a Student-$t$  distribution used across all four GARCH models.
+
+\subsection{Unit Root Test}
+Stationarity of the return series is verified using the Augmented Dickey–Fuller (ADF) test (Dickey and Fuller, 1981), with the alternative hypothesis of stationarity. The lag length is determined using the Akaike Information Criterion. Rejection of the unit root null is a necessary prerequisite for valid GARCH estimation, as non-stationarity in the conditional mean would invalidate inferences drawn from the variance equation.
+
+\subsection{ARCH-LM Test}
+
+The presence of autoregressive conditional heteroskedasticity is tested using the ARCH
+Lagrange Multiplier (ARCH-LM) test of \cite{engle1982} with 10 lags. The test regresses
+squared residuals from an OLS mean equation on their own lags and tests whether the
+slope coefficients are jointly zero. Under the null hypothesis of no ARCH effects, the LM
+statistic $nR^2 \sim \chi^2(q)$, where q is the number of lags. Rejection of the null provides the
+3
+primary econometric motivation for GARCH modelling
+
+\subsection{Autocorrelation Structure }
+
+Autocorrelation and partial autocorrelation functions (ACF and PACF)\citep{box2015time} are plotted for both raw returns and squared returns up to 30 lags. Significant autocorrelation in squared returns at multiple lags constitutes additional visual evidence of ARCH effects and volatility clustering. These plots also inform the identification of appropriate ARMA orders for the conditional mean equation, which is set to ARMA(0,0) given the well-documented near-absence of linear predictability in daily equity index returns. 
+
+\section{ Econometric Model Specifications}
+
+Four GARCH-family models are estimated on the full sample. All models share the following conditional mean equation:   
+
+
+\begin{equation}
+r_t = \mu + \varepsilon_t, \qquad
+\varepsilon_t = \sigma_t z_t, \qquad
+z_t \overset{i.i.d.}{\sim} t(\nu)
+\end{equation}
+
+where µ is the unconditional mean,  $\sigma_t$ is the time-varying conditional standard deviation, and $z_t$ is an i.i.d. innovation drawn from a standardised Student’s t distribution with shape parameter $\nu > 2$ \citep{Bollerslev1987}, which accommodates the excess kurtosis documented in financial return series. 
+
+\subsection{Standard GARCH(1,1)}
+The benchmark model is the symmetric GARCH(1,1) of \cite{bollerslev1986}, in which the conditional variance evolves as:
+
+\begin{equation}
+\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2
+\end{equation}
+
+Parameter restrictions $\omega > 0$, $\alpha \geq 0$, $\beta \geq 0$ ensure positive conditional variance. The persistence of volatility shocks is measured by the sum $\alpha + \beta$; values approaching unity $4$ imply slow mean reversion of volatility to its unconditional level. This model serves as the baseline against which more flexible specifications are evaluated.
+
+\subsection{EGARCH(1,1)}
+
+ The Exponential GARCH model of \cite{nelson1991conditional} addresses two limitations of the standard GARCH. First, it operates in log-variance space, automatically guaranteeing non-negative conditional variance without parameter sign restrictions. Second, it explicitly captures the asymmetric leverage effect through the sign of the lagged standardised residual:
+ 
+
+\begin{equation}
+\ln(\sigma_t^2) = \omega + \alpha \left[ |z_{t-1}| - \mathbb{E}|z_{t-1}| \right]
++ \gamma z_{t-1}
++ \beta \ln(\sigma_{t-1}^2)
+\end{equation}
+A statistically significant negative γ confirms the leverage effect: negative shocks (market declines) produce a disproportionately larger increase in conditional volatility than positive shocks of equal magnitude. The sign bias test of \citet{engle1993} is applied to residuals to evaluate the adequacy of asymmetry capture.
+
+\subsection{GJR-GARCH(1,1)}
+ The model of \cite{glosten1993} augments the standard GARCH variance equation with an indicator variable that permits negative shocks to exert a differential impact on future variance:
+\begin{equation}
+\sigma_t^2
+=
+\omega
++
+\alpha \varepsilon_{t-1}^2
++
+\gamma I_{t-1}\varepsilon_{t-1}^2
++
+\beta \sigma_{t-1}^2
+\end{equation}
+
+where $
+I_{t-1}
+=
+\begin{cases}
+1, & \text{if } \varepsilon_{t-1}<0,\\
+0, & \text{if } \varepsilon_{t-1}\ge 0.
+\end{cases}
+$\\
+
+is an indicator function equal to $1$ when the $I_{t-1}$ is negative. A positive and significant
+ $\gamma$ confirms the leverage effect. The total volatility persistence for the GJR-GARCH model is given by $\alpha + \frac{1}{2}\gamma + \beta$.
+
+\subsection{FIGARCH(1,d,1)}
+
+ In Standard GARCH models, autocorrelations of squared returns decay exponentially, which may be too restrictive for series exhibiting long memory in variance. The Fractionally Integrated GARCH model of \cite{baillie1996} generalises the GARCH(1,1) by allowing fractional integration of order $d$ in the variance process: 
+
+\begin{equation}
+(1 - L)^d \varepsilon_t^2
+=
+\left[ 1 - \beta(L) \right]
+\left[ 1 - \phi(L) - \beta(L) \right]
+\sigma_t^2
++
+\eta_t
+\end{equation}
+
+where $L$ is the lag operator and $0 < d < 1$ is the fractional differencing parameter. When $d =0$ the FIGARCH collapses to the standard GARCH; when $d = 1$ it coincides with the IGARCH of 
+\cite{engleboll1986}. Intermediate values of d implies hyperbolic (rather than exponential) decay of the impulse-response function, capturing the empirically observed persistence that decays slowly but eventually reverts to the unconditional mean.
+
+
+\section{Structural Break Analysis: Bai-–Perron Test}
+
+Financial markets are subject to periods of instability caused by economic shocks, policy changes, and major crisis events. Failure to account for such structural breaks can produce biased parameter estimates and artificially inflate measures of volatility persistence. To identify the number and timing of structural breaks in the conditional variance process, this study employs the \cite{baiperron1998,baiperron2003} multiple structural break test  as implemented in the \texttt{strucchange} package in R  \citet{zeileis2002}. 
+
+The test is applied to the squared return series $r 
+_t^2$ as a proxy for the conditional variance. We seeks to detect $m$ breakpoints in the mean of this series by minimising the total sum of squared residuals subject to a minimum segment length constraint. The optimal number of breaks is selected using the Bayesian Information Criterion (BIC) \citep{schwarz1978}, with a maximum of five breaks and a minimum segment length of 10 percent of total observations to ensure adequate degrees of freedom within each regime. Breakpoint confidence intervals are constructed using asymptotic methods. A critical feature of this framework is that breakpoint dates are entirely data-driven: no event dates are pre-assigned or imposed. The procedure determines endogenously where the statistical evidence for a structural shift in the mean of squared returns is strongest. The identified break dates are subsequently used to define volatility regimes for the regime-specific GARCH analysis in Section 3.6. For robustness, segment--level descriptive statistics (mean, standard deviation, skewness, and excess kurtosis) are computed for each regime.
+
+\section{Regime-Specific GARCH Estimation }
+\subsection{Regime Definition }
+Three economically meaningful regimes are defined on the basis of the Bai–Perron break points, corroborated by salient macroeconomic events:
+
+
+
+ 
+
+
+
+\begin{table}[h]
+\centering
+\caption{Volatility Regimes Defined by Bai–Perron Breakpoints}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Regime}&\textbf{ Period } & \textbf{Label} & \textbf{Obs. (approx.) } \\
+\hline
+Regime 1  & Jan 2010 –- Feb 2020 & Pre-COVID  & 2,520   \\
+\hline
+Regime 2 & Feb 2020 –- May 2022 & COVID Crisis & 570 \\
+\hline
+Regime 3 & 3 May 2022 –- Dec 2024 & Post-Crisis  & 64 \\
+\hline
+
+\end{tabular}
+\end{table}
+
+Regime 1 encompasses the longest stretch of the sample and is characterised by relatively moderate volatility punctuated by discrete events such as demonetisation (November 2016). Regime 2 covers the unprecedented market dislocation triggered by the COVID-19 pan demic, including the circuit-breaker event of 23 March 2020. Regime 3 captures the post-pandemic normalisation period, accompanied by rising interest rates and ongoing geopolitical uncertainty.
+
+\subsection{Estimation Procedure }
+All four GARCH variants —--GARCH(1,1), EGARCH(1,1), GJR--GARCH(1,1), and FIGARCH(1,$d$,1) are independently estimated on each regime subsample, yielding 12 fitted models in total. Each model is estimated from scratch on the subsample; no parameters are carried forward from prior regimes. Within each regime, model selection is based on the AIC\citep{akaike1974}, and model adequacy is assessed via the Ljung-–Box test  \citep{ljungbox1978} on standardised residuals and their squares. This regime-specific approach offers two analytical advantages. First, it allows structural parameters—particularly the ARCH effect ($\alpha$), GARCH persistence ($\beta$), leverage coefficient ($\gamma$), and long-memory parameter ($d$)  to vary freely across regimes without imposing smoothness constraints. Second, it directly tests whether the best-fitting model changes across volatility regimes, which would indicate parameter instability in a single full-sample specification.
+
+
+\section{Multi-Horizon Volatility Forecasting }
+\subsection{Rolling Window Forecast Design}
+
+Out-of-sample forecasting performance is evaluated using a rolling window scheme over the 2025 validation period (approximately 249 trading days). At each step i in the validation window, the model is fitted on all data up to observation $n_{\text{train}} + i$, and multi-step-ahead conditional volatility forecasts are generated for horizons $h \in \{1,5,10,20\}$ days. To reduce computational burden, models are refitted every five steps rather than at each observation.
+
+The realised volatility proxy for each horizon is defined as follows:
+
+\begin{table}[h]
+\centering
+\caption{Realised Volatility Proxies by Forecast Horizon}
+\label{horizon 1,5,10,20}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Horizon} & \textbf{Realised Volatility Proxy}  \\
+\hline
+ 1 -- Day & Absolute daily return:$RV_t^{(1)} = |r_t|$  \\
+\hline
+ 5 -- Day  & Rolling 3-day standard deviation of returns \\
+\hline
+ 10 -- Day  & Rolling 5-day standard deviation of returns \\
+\hline
+ 20 -- Day  & Rolling 20-day standard deviation of returns \\
+\hline
+
+\end{tabular}
+\end{table}
+
+\subsection{Forecast Accuracy Metrics}
+Three standard loss functions are computed for each model-–horizon combination were used to evaluate model performance: RMSE, MAE, and MAPE \citep{hyndman2006, armstrong1992}.
+
+\begin{equation}
+\label{MAE}
+\text{MAE}
+=
+\frac{1}{T}
+\sum_{t=1}^{T}
+\left|
+\hat{\sigma}_t - RV_t
+\right|
+\end{equation}
+
+\begin{equation}
+\label{RMSE}
+\text{RMSE}
+=
+\sqrt{
+\frac{1}{T}
+\sum_{t=1}^{T}
+\left(
+\hat{\sigma}_t - RV_t
+\right)^2
+}
+\end{equation}
+
+\begin{equation}
+\label{MAPE}
+\text{MAPE}
+=
+\frac{100}{T}
+\sum_{t=1}^{T}
+\frac{
+\left|
+\hat{\sigma}_t - RV_t
+\right|
+}{
+RV_t + \epsilon
+}
+\end{equation}
+
+where $\hat{\sigma}_t$  is the model’s conditional volatility forecast, $RV_t$ is the realised volatility proxy,
+T is the number of validation observations, and $\epsilon = 10^{-8}$ is a small constant to prevent
+division by zero. Lower values indicate better forecasting accuracy.
+
+\subsection{Diebold–-Mariano Test}
+Pairwise forecast accuracy is formally assessed using the Diebold-–Mariano (DM) test \citep{Diebold1995}. For each horizon h, FIGARCH is compared against each of the three competing models. Let $e_1t$ and 
+$e_2t$ denote the forecast errors of FIGARCH and a benchmark model, respectively, and define the loss differential $
+d_t = e_{1t}^2 - e_{2t}^2
+$. The DM test statistic is:
+\begin{equation}
+\label{DM TEST}
+DM
+=
+DM
+=
+\frac{\bar{d}}
+{\sqrt{\mathrm{Var}(\bar{d})}}
+\sim N(0,1) 
+\end{equation}
+
+The one-sided alternative tests whether FIGARCH generates a significantly lower squared
+forecast error:
+
+\begin{equation}
+H_1 : \mathbb{E}[L(e_{1t})] < \mathbb{E}[L(e_{2t})]
+\end{equation}
+
+Comparing FIGARCH against the other 3 models having a p-value below 0.05 indicating that over 5 percent significance level ,FIGARCH’s forecasting is statistically
+significant.
+
+\section{VaR and ES Estimation}
+\subsection{VaR Computation}
+VaR at confidence level $(1 - \alpha)$ is estimated using the best-performing GARCH
+model, selected by the lowest AIC over the full sample. The conditional VaR at tail
+probability $\alpha \in \{1\%, 5\%\}$ is:
+
+\begin{equation}
+\mathrm{VaR}_t(\alpha)
+=
+\hat{\mu}_t
++
+\hat{\sigma}_t \cdot q_{\alpha}(\nu)
+\end{equation}
+
+here $\mu_t$ and $\sigma_t$ are the fitted conditional mean and standard deviation from the GARCH
+model, and $q_{\alpha}(\nu)$ is the $\alpha$-quantile of the standardised Student’s t distribution with
+estimated degrees of freedom $\nu$. This parametric approach fully exploits the time-varying
+conditional moments estimated by the GARCH model.
+
+\subsection{Expected Shortfall}
+Expected Shortfall (ES), also termed Conditional Value-at-Risk (CVaR), measures the expected loss conditional on the loss exceeding the VaR threshold. As a coherent risk measure (Artzner et al., 1999), ES is preferred over VaR for regulatory and portfolio risk 10 management applications. It is estimated empirically as:
+
+\begin{equation}
+ES(\alpha)
+=
+\mathbb{E}
+\left[
+r_t \mid r_t < \mathrm{VaR}_t(\alpha)
+\right]
+\end{equation}
+This is computed as the sample average of actual returns on those days when the realised return falls below the corresponding VaR threshold, yielding a non-parametric estimate that requires no additional distributional assumptions beyond those already embodied in
+the GARCH model.
+
+\subsection{Kupiec Proportion-of-Failures Backtesting}
+The adequacy of the VaR estimates is evaluated using the  Proportion of Failures (POF) test \citep{kupiec1995}. Under the null hypothesis that the model is correctly specified, the probability of an exceedance should equal the nominal tail probability.
+
+The likelihood ratio statistic is:
+
+\begin{equation}
+LR_{\mathrm{POF}}
+=
+-2 \ln \left[(1-p)^{n-x} p^x \right]
++
+2 \ln \left[(1-\hat{\rho})^{n-x} \hat{\rho}^x \right]
+\sim \chi^2(1)
+\end{equation}
+
+where x is the observed number of exceedances, n is the total number of observations, and $\hat{\rho} = \frac{x}{n}$ is the empirical failure rate. Failure to reject $(p-value > 0.05)$ at the $1$ percent and $5$ per cent confidence levels constitutes evidence that the GARCH-based VaR
+model is statistically adequate.
+
+\section{Estimation, Model Selection, and Software}
+\subsection{Estimation Method}
+
+All GARCH models are estimated via Quasi-Maximum Likelihood Estimation (QMLE) following \citet{bollerslev1992quasi}. Estimation Employes the hybrid solver in the \citep{ghalanos2020introduction} \texttt{rugarch} package, which combines the BFGS,  Nelder-–Mead, and other numerical optimisation routines sequentially to avoid local optima. Standard errors are computed using the \citet{bollerslev1992quasi} robust sandwich estimator,ensuring valid inference even under distributional misspecification of the innovation term.
+
+\subsection{Model Selection Criteria}
+Model selection across the four GARCH variants is conducted on the basis of two information criteria evaluated: The Akaike Information 
+Criterion \citep[AIC;][]{akaike1974} and the Bayesian 
+Information Criterion \citep[BIC;][]{schwarz1978} on the full sample:
+
+\begin{equation}
+    \mathrm{AIC}
+=
+-2 \ln(\mathcal{L})
++
+2k
+\end{equation}
+
+\begin{equation}
+    \mathrm{BIC}
+=
+-2 \ln(\mathcal{L})
++
+k \ln(n)
+\end{equation}
+
+where $\mathcal{L}$is the  maximised log-likelihood, $k$ is the number of freely estimated parameters, and $n$ is the sample size. Both criteria penalise  over-parameterisation, while AIC prioritises  minimising  information loss,often provide more edge to complex models that generalise new data better. On contrast BIC imposing a stricter penalty for larger model complexity. The AIC serves as the primary selection criterion in this study, while BIC  provides a robustness check. The model minimising AIC is subsequently adopted for VaR and ES estimation.
+
+\vspace{2cm}
+
+\subsection{Diagnostic Checks}
+Following estimation, each model is subjected to the following diagnostic tests applied to $
+\hat{z}_t
+=
+\frac{\hat{\varepsilon}_t}{\hat{\sigma}_t}$
+the standardised residuals:
+\begin{enumerate}
+    \item \textbf{Ljung–Box test on $\hat{z}_t$  (10 lags)}\cite{ljungbox1978}:  examines whether standardised 
+residuals exhibit remaining serial correlation in the conditional mean equation. Failure to reject ($p > 0.05$) confirms that the mean specification has adequately filtered linear dependence from the return series.
+    \item \textbf{Ljung–Boxtest on $\hat{z}^2_t$ (10 lags)}: examines whether squared standardised residuals retain any remaining ARCH 
+effects. Failure to reject ($p > 0.05$) indicates that the estimated GARCH specification has successfully accounted for volatility clustering 
+in the data.
+    \item \textbf{Sign Bias test} \citep{engle1993}: applied to EGARCH and GJR-GARCH residuals to evaluate whether the asymmetric variance specification adequately captures the leverage effect.
+
+\end{enumerate}
+
+    \vspace{2cm}
+
+\newpage
+
+\subsection{Software and Reproducibility}
+All analyses are conducted in R using the packages listed in Table 1.3.
+\begin{table}[h]
+\centering
+\caption{R Packages Used in the Study}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Package} & \textbf{Version} & \textbf{Purpose}  \\
+\hline
+  quantmod & 0.4.x & Data retrieval from Yahoo Finance  \\
+\hline
+  rugarch & 1.4.x & GARCH specification, estimation, and forecasting \\
+\hline
+  FinTS & 0.4.x & ARCH-LM test \\
+\hline
+  tseries & 0.10.x & ADF test and Jarque–Bera test \\
+\hline
+ strucchange & 1.5.x & Bai–Perron structural break test \\
+\hline
+ forecast &  8.x & Diebold–Mariano test\\
+\hline
+ ggplot2/patchwork  & 3.x/1.x & Data visualisation\\
+\hline
+ moments & 0.14 & Skewness and kurtosis computation \\
+\hline
+  dplyr/tidyr & 1.x  & Data manipulation and reshaping\\
+\hline
+\end{tabular}
+\end{table}
+
+Data retrieval, cleaning, model estimation, diagnostic testing, forecasting, and visualisation are performed within a single self-contained R script to ensure full reproducibility. All outputs—including CSV tables and PNG figures—are saved automatically to a designated output directory.
+
+
+This chapter has presented a rigorous and comprehensive methodology for analysing
+volatility dynamics in the Nifty 50 Index over a fifteen-year period. The analytical framework : from data collection and preliminary testing, through
+full-sample GARCH model estimation and comparison, to structural break identification,
+regime-specific re-estimation, multi-horizon rolling forecasting with pairwise D--M tests, and  parametric VaR and ES estimation validated by the Kupiec POF backtest.The use of four complementary GARCH specifications  ranging from the symmetric GARCH to the long-memory FIGARCH ensures that modelling exercise captures the primary characteristics of conditional 
+volatility that have been consistently documented across financial markets, with persistence in variance and asymmetric shock transmission. The regime-specific approach, based in data-driven Bai–Perron breakpoints, further bettered the analysis by allowing structural heterogeneity to be explicitly modelled rather than averaged away.Together, these methodological choices pose the study to yield robust, policy-relevant insights into the risk characteristics of India’s premier equity index.

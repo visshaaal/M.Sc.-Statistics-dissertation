@@ -1,0 +1,5 @@
+"Lag","LB_stat","p_value","Result"
+5,888.5361,0,"ARCH effects present → GARCH needed"
+10,2002.1692,0,"ARCH effects present → GARCH needed"
+15,2140.575,0,"ARCH effects present → GARCH needed"
+20,2253.208,0,"ARCH effects present → GARCH needed"

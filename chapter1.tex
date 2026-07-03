@@ -1,0 +1,107 @@
+\chapter{Introduction}
+\section{Background and Context}
+Financial markets are inherently volatile and the accurate modelling of this volatility is central to risk management, portfolio optimisation and derivative pricing. India’s financial markets have undergone are markable t ransformation over the past two decades, with the Nifty50 index growing from approximately 5,000 points in 2010 to over 26,000 by 2024.This growth reflects the rapid expansion of India’s capital markets.
+
+Volatility is different from risk. When it is interpreted as uncertainty, it becomes a key input to many investment decisions and portfolio creations. Investors and portfolio managers have certain levels of risk which they can bear.A good forecast of the volatility of asset prices over the investment holding period is a good starting point for assessing investmen risk\citep{poon2003}.
+
+The Indian equity market presents a compelling case for volatility analysis.As one of the growing emerging economies the Indian stock market has attracted significant domestic and foreign institutional investment over the past decade. This makes volatility estimation increasingly critical for market participants. the Nifty 50 is one of the most widely followed benchmarks for Indian equity markets. It comprises of 50 large and actively traded companies listed on the National Stock Exchange (NSE) and serves as an important indicator for the overall performance and sentiment of the Indian equity market.
+
+
+The Nifty 50 index has experienced episodes of extreme volatility such as.
+\begin{itemize}
+ \item The 2016 demonetisation shock
+
+ \item The COVID-19 crash of March 2020
+
+ \item The geopolitical turbulence of 2022
+\end{itemize}
+
+
+These structural breaks make the Indian market an ideal laboratory for testing the performance of volatility models under market conditions. Against this backdrop,the present study
+applies a family of GARCH models to Nifty 50 returns over the period 2010--2024 with the objective of identifying the most appropriate model, for capturing the dynamic volatility
+behaviour of the Indian equity market and Nifty 50 index.
+\vspace{2cm}
+
+
+
+
+\section{Problem Statement}
+Financial markets are really interesting. Despite all the research on volatility modelling in developed markets there is not comparison of GARCH-family models on Indian equity markets especially after the COVID recovery period from 2020 to 2024. Most studies only look at one model at a time of comparing different types of models like symmetric and asymmetric ones. This leaves a gap in our understanding of which model is best at capturing the leverage effects and long-memory properties of the Nifty 50.
+
+Recently many researchers have started to agree that asymmetric models, like EGARCH and GJR-GARCH work better than ones on Indian equity indices. This is because when the market goes down it can get really volatile as we saw in the research by \citet{mahajan2022}, and \citet{esup3}and others. This study wants to add evidence to this discussion by comparing four different GARCH-family models over a long period of 15 years, which includes many big changes which occur during this period in the Indian market.
+
+This study is trying to fill this gap by looking at four GARCH-family models, including GARCH, EGARCH, GJR-GARCH and FIGARCH using Nifty 50 returns from January 2010 to December 2024. We chose this 15-year period on purpose so we can see how the market worked before and after events like demonetisation the COVID-19 crisis and the recovery that followed the covid crises. We also want to look beyond the numbers and see how well these models can predict volatility and Value at Risk in the future, which is something that many studies, on the Indian market do not do. By doing this we hope to contribute to both the practical understanding of how volatility works in one of the worlds most important emerging equity markets the Indian equity market.
+
+
+
+\vspace{5cm}
+
+\section{Research Objectives}
+
+The primary objective of this study is to analyse and compare the performance of GARCH-family volatility models on the Nifty 50 index over the period 2010–2024. Specifically, the study pursues the following objectives:
+
+\begin{enumerate}
+
+\item To examine the statistical properties of Nifty 50 daily returns, including volatility clustering, fat tails, and asymmetric effects, as a precondition for GARCH model estimation.
+    
+\item To estimate and compare four GARCH-family models — GARCH(1,1), EGARCH(1,1), GJR-GARCH(1,1), and FIGARCH(1,d,1) — in terms of parameter significance, persistence, and information criteria.\\
+   
+
+\item To investigate the differences in model performance across two distinct market regimes — the pre-COVID period (2010–2019) and the post-COVID period (2020–2024) — in order to determine whether the pandemic fundamentally altered the volatility dynamics of the Indian equity market\\
+
+\item To evaluate the out-of-sample forecasting accuracy of each model using January 2025 realized volatility data.\\
+
+
+\item To estimate Value at Risk (VaR) at the 1\% and 5\% confidence levels using the best-performing model, providing risk management implications for investors in the Indian equity market.
+\end{enumerate}
+
+\vspace{4cm}
+\section{ Research Questions}
+This study seeks to address the following research questions:
+
+\begin{enumerate}
+\item Do Nifty 50 daily log returns exhibit the key facts — volatility clustering, fat tails, and negative skewness — that justify the application of GARCH-family models?
+\item Which GARCH-family model — GARCH, EGARCH, GJR-GARCH, or FIGARCH — best captures the volatility dynamics of the Nifty 50 index over the full sample period 2010–2024, based on information criteria and diagnostic tests?
+\item Did the COVID-19 pandemic fundamentally alter the volatility behaviour of the Indian equity market — specifically in terms of volatility persistence, asymmetry, and model ranking — when comparing the pre-COVID period (2010-–2019) with the post-COVID period (2020-–2024)?
+\item How accurately do the estimated GARCH-family models forecast out-of-sample conditional volatility for January 2025, and which model demonstrates superior forecasting performance?
+\item What are the Value at Risk implications at the 1\% and 5\% confidence levels for investors holding positions in the Nifty 50 index, as estimated by the best-performing model
+\end{enumerate}
+
+
+\section{Purpose of the Study}
+
+The present study makes both theoretical and practical contributions to the understanding of volatility dynamics in the Indian equity market, and its significance can be appreciated from three perspectives — academic, practical, and policy.\\
+
+
+From an academic perspective, the study contributes to the growing body of empirical literature on GARCH-family models in emerging markets. While several studies have applied individual GARCH specifications to Indian indices, a systematic and comparative analysis of four models — including the relatively under utilised FIGARCH model\citep{} — over a long and structurally diverse sample period remains scarce. Furthermore, the sub-period analysis comparing the pre-COVID (2010-–2019) and post-COVID (2020–-2024) market regimes adds a novel dimension to the existing literature, providing empirical evidence on whether the pandemic permanently altered the volatility structure of the Indian equity market. This study therefore responds directly to the call in the literature for more comprehensive model comparisons in emerging market contexts \citep{poon2003,mahajan2022}.\\
+
+
+On a "real world" level, this study's results are to understand the markets dynamics and are directly applicable to the investors, portfolio managers, and risk officers working in the Indian financial markets. Forecasting the volatility is crucial  for portfolio optimization, pricing derivatives and developing the hedging strategies. Findings in this study offer evidence-based model selection advice for practitioners using models to manage real-world risks, in which the choices are to use the model with the lowest in-sample error or to use the model that best captures out-of-sample volatility for the Nifty 50.\\
+
+ Moreover, the VaR values determined using the best-fitting model provide benchmarks for measuring downside risks.\\
+
+
+Policy-wise it is important to realize the asymmetric and persistent nature of Indian market volatility, with implications for regulators and policymakers. Both Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI) need to perform well-designed circuit breakers, margin requirements, and systemic risk monitoring frameworks based on accurate estimates of volatility. The conclusions from this study, especially those pertaining to leverage effect and the presence of volatility persistence in distinct market regimes can contribute to the ongoing process of regulating capital markets and help achieve financial stability in the rapidly modernising Indian markets.\\
+
+
+Overall, this study is important because the methodological rigor, length of the data set, and extensive event in it non only confirmed the results but also gave practical implications for both academics and practitioners and policy makers.
+
+\section{Structure of the Dissertation}
+The remainder of this dissertation is organised into six chapters, each addressing a distinct component of the research.\\
+
+Chapter 2 presents a comprehensive review of the existing literature on volatility modelling in financial markets. It begins with the theoretical foundations of the ARCH model introduced by \cite{engle1982} and its generalisation by \cite{bollerslev1986}, before tracing the development of asymmetric and long-memory extensions including EGARCH, GJR-GARCH, and FIGARCH. The chapter then narrows its focus to empirical studies on Indian equity market volatility, identifying the key findings, methodological approaches, and gaps in the existing literature that the present study seeks to address.\\
+
+
+Chapter 3 details the econometric methodology employed in this study. It provides formal mathematical specifications of all four GARCH-family models, explains the Maximum Likelihood Estimation procedure used for parameter estimation, and describes the diagnostic and model selection criteria applied — including the Akaike Information Criterion\citep{akaike1974}, Bayesian Information Criterion\citep{schwarz1978}, and Ljung-Box tests\citet{ljungbox1978}. The chapter also outlines the Value at Risk framework and the out-of-sample forecasting evaluation methodology.\\
+
+
+Chapter 4 describes the data used in this study. It provides information on the source, frequency, and time period of the Nifty 50 closing price series, followed by a presentation of descriptive statistics for the log return series. Preliminary tests — including the Augmented Dickey-Fuller test for stationarity\citep{said1984testing} and the ARCH-LM test\citep{engle1982} for conditional heteroskedasticity — are reported and discussed to confirm the suitability of the data for GARCH estimation.\\
+Chapter 5 presents the empirical results of the study in two parts. The first part reports the full-period estimation results for all four models over 2010-–2024, including coefficient estimates, persistence measures, model diagnostics, volatility forecasts, and Value at Risk estimates. The second part presents the sub-period analysis, comparing model performance and volatility behaviour across the pre-COVID period (2010-–2019) and the post-COVID period (2020-–2024).\\
+Chapter 6 discusses the empirical findings in the context of the existing literature, addressing each research question in turn. It interprets the practical and policy implications of the results and acknowledges the limitations of the study.\\
+Chapter 7 concludes the dissertation by summarising the key findings, stating the main contributions of the study, and suggesting directions for future research.
+
+
+
+
+
+\vspace{0.4cm}

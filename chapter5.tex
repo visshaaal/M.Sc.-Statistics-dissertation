@@ -1,0 +1,64 @@
+\chapter{Conclusion and Future Work}
+
+\section{Conclusion}
+
+The present study analysed conditional volatility 
+dynamics of the Indian equity market by estimating and comparing four GARCH-family models — GARCH, EGARCH, GJR-GARCH, and FIGARCH — on daily Nifty 50 returns over the period January 2010 to December 2024, comprising 3,678 trading day observations. The analysis addressed five research questions evaluating preliminary diagnostics, full-period model comparison, regime-specific estimation, out-of-sample forecasting, and Value at Risk estimation.
+
+
+The preliminary analysis confirmed that Nifty 50 daily log returns exhibit all the stylised facts that justify GARCH modelling — significant volatility clustering, fat tails, negative skewness, and strong ARCH effects. The ADF test confirmed stationarity of the return series, while the ARCH-LM test statistic of 892.97 provided overwhelming statistical justification for the application of GARCH-family models.
+
+
+Among the four competing specifications estimated over 
+the full sample, EGARCH emerges as the superior 
+in--sample model, recording the lowest AIC of 9,717.374 
+and BIC of 9,754.635. The significance of the asymmetry 
+parameter in both EGARCH ($\gamma = 0.119$) and 
+GJR--GARCH ($\gamma = 0.139$) provides robust evidence 
+that negative return innovations exert a 
+disproportionately greater upward pressure on conditional 
+variance than positive shocks of identical magnitude, 
+corroborating the leverage effect documented extensively 
+in emerging equity market studies.
+
+
+
+Across all four models, volatility persistence is very high. The GARCH(1,1) model produces an $\alpha1$ + $\beta1$ sum of 0.980, which is just below 1.0, meaning that once volatility rises, it takes a long time to settle back down rather than returning to normal quickly.
+The FIGARCH model adds further evidence of this. Its fractional differencing parameter δ = 0.485 falls between 0 and 1, which confirms the presence of long memory in Nifty 50 volatility. This means past volatility shocks continue to influence current volatility over a much longer period than standard GARCH models can account for. Standard GARCH models are built to capture only short-term persistence and are not designed to detect this kind of long-lasting behaviour.
+
+
+The Bai-Perron structural break test identified two statistically significant breakpoints at 27 February 2020 and 20 May 2022, delineating three distinct volatility regimes. The regime-specific analysis revealed important structural heterogeneity across these periods. During the COVID crisis regime, volatility persistence remained extremely high at 0.984, while the leverage effect intensified significantly, with the EGARCH asymmetry parameter rising from −0.106 in Regime 1 to −0.138 in Regime 2. The post-crisis regime witnessed a significant reduction in GJR-GARCH persistence from 0.974 to 0.655 indicating a structural break in volatility transmission after the pandemic. AIC confirmed the robustness of asymmetric volatility modelling in different market conditions as EGARCH (1,1) was the best model in all the three regimes.
+
+
+A significant difference between in-sample fit and forecasting performance was found in the out-of-sample forecasting data Despite ranking last by AIC in the full-period analysis, FIGARCH(1,d,1) consistently achieved the lowest forecasting error at the 1-day horizon across most quarters, with this advantage statistically confirmed by the Diebold-Mariano test in Q1, Q3, and Q4 2025. This finding is consistent with the theoretical advantage of long memory specifications in capturing slowly decaying volatility persistence, and directly corroborates the earlier findings of \citet{hansen2005} and \cite{poon2003} that in-sample fit does not guarantee out-of-sample forecasting accuracy. At longer horizons, the performance advantage of FIGARCH diminishes and no single model dominates consistently, suggesting that horizon-specific model selection is important for practical risk management applications.
+
+
+The VaR analysis derived from the best in-sample model EGARCH produced daily VaR estimates of −2.37\% and −1.50\% at the 1\% and 5\% confidence levels respectively. The Kupiec Proportion of Failures backtest confirmed the adequacy of the VaR model at the 1\% confidence level, with 46 observed breaches against an expected 37 (LR statistic = 2.163, p = 0.141).
+
+
+Overall this study has three distinct merits to the literature. First, the comparison of multi-model, multi-horizon GARCHs with Nifty 50 data is the largest one ever done for GARCH models that encompasses various structural breaks and market crises over a 15 year time series. Second, it provides new empirical evidence on the long-run structural impact of COVID-19 on the Indian equity market volatility dynamics revealing that the effect leverage and persistence characteristics of Nifty 50 is a significant change that is expected to be permanent as a result of the COVID-19 pandemic. Third, it reveals a systematic difference between in-sample rankings of the models and their out-of-sample forecasting accuracy with meaningful practical implications for model selection for Indian market risk management applications.
+
+\section{Future Work}
+
+
+There are several future opportunities for further research arising from this study, as it has enabled the dynamics of volatility of the Nifty50 to be analysed in detail.
+
+
+The first is that this study is concerned with univariate GARCH models with the incorporation of one equity index.Further studies can be done on the multivariate GARCH models such as DCC-GARCH\citep{Engle2002dcc} and BEKK-GARCH\citep{engle1995multivariate} which will enable them to produce a detailed analysis of the systemic risk of Indian financial markets by examining the relationships between the Nifty 50 and other asset classes such as bond, commodities and foreign exchange. 
+
+
+Second,the out--of sample evaluation in this study is for the calendar year 2025 using a rollingwindow approach.The analysis can be further extended to include other out-of-sample periods to allow for a spanning of several market cycles as well as different measures of realised volatility which can be based on high-frequency data, such as bipower variation or intra--day realised variance, to provide more precise results.
+
+The current research, based on conditional moments of the GARCH (Generalized Autoregressive Conditional Heteroskedasticity) system, estimates parametric VaR, which is similar to Shirato's research estimates. It can be compared with a non-parametric volatility forecasting model proposed in more recent literatures, including historical simulation, filtered historical simulation, or to a variety of different machine learning models, including Long Short-Term Memory (LSTM) network and hybrid GARCH-neural network models.
+
+
+An advantage of this study is that the third question is examined from a regime-specific perspective on squared returns, which is not examined in the traditional studies.The application can be extended to include Markov switching GARCH models that present smooth probabilistic switching among regimes (rather than switching at values of sharp discontinuities) and could offer a more elaborate characterization of regime switchings in the Indian stock market in the future.
+
+
+
+
+
+Fifth,the study is done using the main index of Nifty 50 INDEX --- Extension of the study on the indices of other sectors (e.g. Bank index of Nifty, IT index of Nifty, Pharma index of Nifty to include details on volatility persistence and volatility asymmetry on other sectors to provide more sector specific details to the sector level portfolio risk management. 
+
+
+Finally,the Value at Risk analysis in this study is based on the unconditional VaR estimates from the best in sample model. In future, the back test of the Expected Shortfall -- following the Basel III  ES Back test framework -- could be considered for a going forward process. This provides an all-inclusive regulatory-compliance assessment.

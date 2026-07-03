@@ -1,0 +1,17 @@
+"Quarter","Horizon","Model","RMSE"
+"Q1 2025 (Jan-Mar)","1-day","FIGARCH(1,d,1)",0.564317
+"Q1 2025 (Jan-Mar)","20-day","FIGARCH(1,d,1)",0.151022
+"Q1 2025 (Jan-Mar)","3-day","FIGARCH(1,d,1)",0.399424
+"Q1 2025 (Jan-Mar)","5-day","FIGARCH(1,d,1)",0.275412
+"Q2 2025 (Apr-Jun)","1-day","GJR-GARCH(1,1)",0.7182
+"Q2 2025 (Apr-Jun)","20-day","GARCH(1,1)",0.1931
+"Q2 2025 (Apr-Jun)","3-day","FIGARCH(1,d,1)",0.568204
+"Q2 2025 (Apr-Jun)","5-day","FIGARCH(1,d,1)",0.435185
+"Q3 2025 (Jul-Sep)","1-day","FIGARCH(1,d,1)",0.385749
+"Q3 2025 (Jul-Sep)","20-day","FIGARCH(1,d,1)",0.248811
+"Q3 2025 (Jul-Sep)","3-day","FIGARCH(1,d,1)",0.326966
+"Q3 2025 (Jul-Sep)","5-day","FIGARCH(1,d,1)",0.276569
+"Q4 2025 (Oct-Dec)","1-day","FIGARCH(1,d,1)",0.340743
+"Q4 2025 (Oct-Dec)","20-day","FIGARCH(1,d,1)",0.216852
+"Q4 2025 (Oct-Dec)","3-day","FIGARCH(1,d,1)",0.267714
+"Q4 2025 (Oct-Dec)","5-day","FIGARCH(1,d,1)",0.203761
